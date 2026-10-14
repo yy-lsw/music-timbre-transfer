@@ -1,0 +1,24 @@
+# 依赖
+node_modules/
+.venv/
+venv/
+__pycache__/
+*.pyc
+*.pyo
+
+# 构建产物
+dist/
+build/
+.vite/
+
+# 编辑器与系统文件
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+
+# 运行数据与日志
+*.db
+*.log
+backend/uploads/
+backend/outputs/
