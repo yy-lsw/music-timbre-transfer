@@ -1,11 +1,10 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-轻量化音乐质感转换系统 —— 一键启动脚本
-Lightweight Music Timbre Transfer System
+DSP 音频变声器 —— 一键启动脚本。
 
 用法:
-    python main.py            # 默认启动
+    python main.py            # 默认启动后端和前端
     python main.py backend    # 仅启动后端
     python main.py frontend   # 仅启动前端
 """
@@ -51,9 +50,8 @@ def get_real_python():
 def print_banner():
     print()
     print("=" * 58)
-    print("  轻量化音乐质感转换系统")
-    print("  Lightweight Music Timbre Transfer System")
-    print("  作者: 余毅 | 毕业设计作品")
+    print("  DSP Audio Effects / 音频变声器")
+    print("  Phase Vocoder + EQ + Dynamics + Reverb")
     print("=" * 58)
     print()
 
@@ -61,11 +59,10 @@ def print_banner():
 def start_backend():
     """启动 Flask 后端"""
     print("[启动] 后端服务 (Flask) 启动中...")
-    app_path = os.path.join(BACKEND_DIR, "app.py")
     python_exe = get_real_python()
     return subprocess.Popen(
-        [python_exe, app_path],
-        cwd=BACKEND_DIR,
+        [python_exe, "-m", "backend.app"],
+        cwd=BASE_DIR,
         creationflags=subprocess.CREATE_NEW_CONSOLE if os.name == "nt" else 0,
     )
 
@@ -134,14 +131,13 @@ def main():
             webbrowser.open("http://localhost:3000")
             print("[系统] 已打开浏览器，等待页面加载...")
 
-        # 等待子进程
-        for name, proc in processes:
-            proc.wait()
-
+        while processes and all(proc.poll() is None for _, proc in processes):
+            time.sleep(1)
     except KeyboardInterrupt:
         print("\n[系统] 正在停止所有服务...")
         for name, proc in processes:
-            proc.terminate()
+            if proc.poll() is None:
+                proc.terminate()
         print("[系统] 已停止。")
 
 

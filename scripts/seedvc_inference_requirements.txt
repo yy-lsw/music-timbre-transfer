@@ -1,0 +1,17 @@
+# Minimal dependencies for Seed-VC offline (zero-shot) inference.
+# PyTorch / torchaudio are installed separately so they can pull the CUDA build.
+numpy==1.26.4
+scipy==1.13.1
+librosa==0.10.2
+pyyaml
+transformers==4.46.3
+huggingface-hub>=0.28.1
+pydub==0.25.1
+munch==4.0.0
+einops==0.8.0
+descript-audio-codec==1.0.0
+soundfile==0.12.1
+matplotlib
+onnxruntime
+accelerate
+tqdm

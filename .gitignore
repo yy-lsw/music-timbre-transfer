@@ -22,3 +22,7 @@ Thumbs.db
 *.log
 backend/uploads/
 backend/outputs/
+
+# Seed-VC / neural voice conversion (cloned repo, venv, pretrained weights)
+third_party/
+references/

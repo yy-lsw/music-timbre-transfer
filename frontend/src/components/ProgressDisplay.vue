@@ -1,5 +1,5 @@
 <template>
-  <div class="progress-display" v-if="visible">
+  <div v-if="visible" class="progress-display">
     <el-progress
       :percentage="progress"
       :status="progressStatus"
@@ -9,9 +9,6 @@
     />
     <div class="progress-info">
       <el-tag :type="tagType" size="default">{{ statusMessage }}</el-tag>
-      <span v-if="frame > 0" class="frame-info">
-        帧: {{ frame }} | 时延: {{ latencyMs }}ms
-      </span>
     </div>
   </div>
 </template>
@@ -24,20 +21,20 @@ const props = defineProps({
   progress: { type: Number, default: 0 },
   status: { type: String, default: "" },
   message: { type: String, default: "" },
-  frame: { type: Number, default: 0 },
-  latencyMs: { type: Number, default: 0 },
   isRunning: { type: Boolean, default: false },
 });
 
 const progressStatus = computed(() => {
   if (props.status === "completed") return "success";
   if (props.status === "error") return "exception";
+  if (props.status === "cancelled") return "warning";
   return "";
 });
 
 const tagType = computed(() => {
   if (props.status === "completed") return "success";
   if (props.status === "error") return "danger";
+  if (props.status === "cancelled") return "info";
   return "warning";
 });
 
@@ -51,15 +48,10 @@ const statusMessage = computed(() => props.message || "等待中...");
   background: #f8f9fa;
   border-radius: 8px;
 }
+
 .progress-info {
   display: flex;
-  justify-content: space-between;
   align-items: center;
   margin-top: 10px;
-}
-.frame-info {
-  font-size: 13px;
-  color: #606266;
-  font-family: monospace;
 }
 </style>

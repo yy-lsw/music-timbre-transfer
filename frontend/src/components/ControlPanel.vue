@@ -7,14 +7,14 @@
       :loading="isRunning"
       @click="$emit('start')"
     >
-      {{ isRunning ? "转换中..." : "开始转换" }}
+      {{ isRunning ? "转换中" : "开始转换" }}
     </el-button>
     <el-button
       size="large"
       :disabled="!isRunning"
-      @click="$emit('pause')"
+      @click="$emit('cancel')"
     >
-      暂停
+      取消
     </el-button>
     <el-button
       size="large"
@@ -32,7 +32,7 @@ defineProps({
   isRunning: { type: Boolean, default: false },
   hasResult: { type: Boolean, default: false },
 });
-defineEmits(["start", "pause", "reset"]);
+defineEmits(["start", "cancel", "reset"]);
 </script>
 
 <style scoped>

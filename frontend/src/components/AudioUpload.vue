@@ -1,5 +1,6 @@
 <template>
   <el-upload
+    ref="uploadRef"
     class="audio-upload"
     drag
     :auto-upload="false"
@@ -14,17 +15,19 @@
     </div>
     <template #tip>
       <div class="el-upload__tip">
-        支持 MP3, WAV, FLAC, AAC, OGG, M4A 格式 | 最大 100MB
+        支持 MP3, WAV, FLAC, OGG | 最大 100MB
       </div>
     </template>
   </el-upload>
 </template>
 
 <script setup>
+import { ref } from "vue";
 import { UploadFilled } from "@element-plus/icons-vue";
 
 const emit = defineEmits(["file-selected"]);
-const acceptFormats = ".mp3,.wav,.flac,.aac,.ogg,.m4a";
+const acceptFormats = ".mp3,.wav,.flac,.ogg";
+const uploadRef = ref(null);
 
 function handleChange(file) {
   emit("file-selected", file.raw);
@@ -33,6 +36,12 @@ function handleChange(file) {
 function handleRemove() {
   emit("file-selected", null);
 }
+
+function clearFiles() {
+  uploadRef.value?.clearFiles();
+}
+
+defineExpose({ clearFiles });
 </script>
 
 <style scoped>
